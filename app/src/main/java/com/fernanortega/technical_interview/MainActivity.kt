@@ -3,18 +3,20 @@ package com.fernanortega.technical_interview
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.R
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.fernanortega.technical_interview.ui.screens.login.LoginScreen
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.fernanortega.technical_interview.ui.navigation.Routes
+import com.fernanortega.technical_interview.ui.login.LoginScreen
+import com.fernanortega.technical_interview.ui.navigation.NavGraph
+import com.fernanortega.technical_interview.ui.recall.RecallScreen
 import com.fernanortega.technical_interview.ui.theme.Technical_InterviewTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    LoginScreen()
+                    NavGraph()
                 }
             }
         }
@@ -38,6 +40,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     Technical_InterviewTheme {
-        LoginScreen()
+        LoginScreen(navController = NavController(LocalContext.current))
     }
 }

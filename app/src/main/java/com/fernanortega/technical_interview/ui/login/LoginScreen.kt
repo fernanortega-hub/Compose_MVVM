@@ -1,4 +1,4 @@
-package com.fernanortega.technical_interview.ui.screens.login
+package com.fernanortega.technical_interview.ui.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,11 +22,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.fernanortega.technical_interview.R
+import com.fernanortega.technical_interview.ui.navigation.Routes
 import com.fernanortega.technical_interview.ui.theme.Technical_InterviewTheme
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     var inputData by rememberSaveable { mutableStateOf("") }
 
     BoxWithConstraints {
@@ -130,7 +132,7 @@ fun LoginScreen() {
                     })
 
                     KeyboardButton(text = "Go", functionClick = {
-                        inputData += it
+                        navController.navigate(Routes.Recall.toString())
                     })
                 }
                 Image(
@@ -245,7 +247,7 @@ fun LoginScreen() {
                         })
 
                         KeyboardButton(text = "Go", functionClick = {
-                            inputData += it
+                            navController.navigate(Routes.Recall.toString())
                         })
                     }
                     Spacer(modifier = Modifier.height(32.dp))
@@ -269,14 +271,6 @@ fun KeyboardButton(text: String, functionClick: (String) -> Unit) {
             functionClick(text)
         }) {
         Text(text = text, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
-    }
-}
-
-@Preview(showBackground = true, widthDp = 1280, heightDp = 800)
-@Composable
-fun DefaultPreview() {
-    Technical_InterviewTheme {
-        LoginScreen()
     }
 }
 
