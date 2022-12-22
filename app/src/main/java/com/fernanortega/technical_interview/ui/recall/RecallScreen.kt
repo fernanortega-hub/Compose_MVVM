@@ -29,7 +29,7 @@ import java.util.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun RecallScreen(navController: NavController) {
+fun RecallScreen(navController: NavController, vm: RecallViewModel) {
     Scaffold(topBar = { TopAppBar() }, bottomBar = { BottomAppBar() }) {
         Column(
             Modifier
@@ -178,12 +178,4 @@ fun getTodayDate(): String {
     val formatter = SimpleDateFormat("EEEE, d MMMM, yyyy", Locale.US)
     val date = Date()
     return formatter.format(date)
-}
-
-@Preview(showBackground = true, widthDp = 800, heightDp = 1280)
-@Composable
-fun RecallPreview() {
-    Technical_InterviewTheme {
-        RecallScreen(navController = NavController(LocalContext.current))
-    }
 }

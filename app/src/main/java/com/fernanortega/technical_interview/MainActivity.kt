@@ -18,7 +18,9 @@ import com.fernanortega.technical_interview.ui.login.LoginScreen
 import com.fernanortega.technical_interview.ui.navigation.NavGraph
 import com.fernanortega.technical_interview.ui.recall.RecallScreen
 import com.fernanortega.technical_interview.ui.theme.Technical_InterviewTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
