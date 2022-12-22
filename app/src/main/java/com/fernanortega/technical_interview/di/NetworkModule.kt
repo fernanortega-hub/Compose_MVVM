@@ -14,8 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "http://dev-graphql.azurewebsites.net/api/test/"
-
     private val interceptorLogging = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
@@ -23,20 +21,15 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL)
-            .client(OkHttpClient().newBuilder().addInterceptor {
-                it.proceed(
-                    it.request().newBuilder().addHeader("API-KEY", "TECHNICALTESTabposus.com")
-                        .build()
-                )
-            }.addInterceptor(interceptorLogging).build())
+        return Retrofit.Builder().baseUrl("http://dev-graphql.azurewebsites.net/api/test/")
+            .client(OkHttpClient().newBuilder().addInterceptor(interceptorLogging).build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideRecallService(retrofit: Retrofit): RecallService {
-        return retrofit.create(RecallService::class.java)
+    fun provideRecallService(): RecallService {
+        return provideRetrofit().create(RecallService::class.java)
     }
 }
