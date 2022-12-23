@@ -36,28 +36,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val navController: NavHostController = rememberNavController()
-                    val firstDestination: String = Routes.Login.toString()
-                    NavHost(navController = navController, startDestination = firstDestination) {
-                        composable(Routes.Login.toString()) {
-                            LoginScreen(navController)
-                        }
-                        composable(Routes.Recall.toString()) {
-                            val recallViewModel = hiltViewModel<RecallViewModel>()
-                            RecallScreen(navController, recallViewModel)
-
-                        }
-                    }
+                    NavGraph()
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    Technical_InterviewTheme {
-        LoginScreen(navController = NavController(LocalContext.current))
     }
 }

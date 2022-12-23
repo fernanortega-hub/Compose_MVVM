@@ -1,6 +1,6 @@
 package com.fernanortega.technical_interview.di
 
-import com.fernanortega.technical_interview.model.network.client.RecallService
+import com.fernanortega.technical_interview.model.network.client.RecallClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +29,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRecallService(): RecallService {
-        return provideRetrofit().create(RecallService::class.java)
+    fun provideRecallClient(): RecallClient {
+        return provideRetrofit().create(RecallClient::class.java)
     }
 }

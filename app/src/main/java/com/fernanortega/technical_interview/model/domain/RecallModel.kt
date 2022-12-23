@@ -13,7 +13,7 @@ data class RecallModel(
     val subTotal: Double,
     val ticketNumber: Int,
     val orderDateTime: String,
-    val orderType: String
+    val orderType: Int
 )
 
 fun RecallEntity.toDomain() = RecallModel(orderId, username, subTotal, ticketNumber, orderDateTime, orderType)

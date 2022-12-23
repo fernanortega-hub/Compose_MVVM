@@ -12,5 +12,5 @@ data class RecallEntity(
     @ColumnInfo(name = "subTotal") val subTotal: Double,
     @ColumnInfo(name = "ticketNumber") val ticketNumber: Int,
     @ColumnInfo(name = "orderDateTime") val orderDateTime: String,
-    @ColumnInfo(name = "orderType") val orderType: String
+    @ColumnInfo(name = "orderType") val orderType: Int
 )

@@ -12,5 +12,13 @@ import com.fernanortega.technical_interview.ui.recall.RecallViewModel
 
 @Composable
 fun NavGraph(navController: NavHostController = rememberNavController(), firstDestination: String = Routes.Login.toString()) {
-
+    NavHost(navController = navController, startDestination = firstDestination) {
+        composable(Routes.Login.toString()) {
+            LoginScreen(navController)
+        }
+        composable(Routes.Recall.toString()) {
+            val recallViewModel = hiltViewModel<RecallViewModel>()
+            RecallScreen(navController, recallViewModel)
+        }
+    }
 }

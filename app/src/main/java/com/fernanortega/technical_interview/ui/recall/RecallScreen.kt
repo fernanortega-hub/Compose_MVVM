@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,14 +52,28 @@ fun RecallScreen(navController: NavController, recallViewModel: RecallViewModel)
                 AddTipButton()
             }
             Spacer(modifier = Modifier.height(16.dp))
-            if(isUiLoading) {
-                CircularProgressIndicator()
+            if (isUiLoading) {
+                Column(
+                    Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
+                }
             } else {
                 if (result.isEmpty()) {
-                    Text(
-                        text = "No hay ordenes por el momento",
-                        modifier = Modifier.align(CenterHorizontally)
-                    )
+                    Column(
+                        Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = CenterHorizontally
+                    ) {
+                        Text(
+                            text = "No hay ordenes por el momento",
+                            fontSize = 22.sp
+                        )
+                    }
                 } else {
                     ListOfOrders(result)
                 }
@@ -205,25 +220,89 @@ fun AddTipButton() {
 @Composable
 fun ListOfOrders(listResult: List<RecallResponse>) {
     var order by rememberSaveable { mutableStateOf("") }
+    var filter by rememberSaveable { mutableStateOf(5) }
+
     Column(Modifier.fillMaxWidth()) {
         TopList(order) { order = it }
         LazyColumn() {
             listResult.forEach {
                 item {
-                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                        Text(text = it.orderId.toString())
-                        Text(text = it.username)
-                    }
+                    OrderCard(it)
                 }
             }
         }
     }
 }
 
+@Composable
+fun OrderCard(data: RecallResponse) {
+
+    var bgColor: Color = MaterialTheme.colors.onSurface
+    when (data.orderType) {
+        1 -> bgColor = Color(0xFFa9a9a9)
+        2 -> bgColor = Color(0xFF8ec35d)
+        3 -> bgColor = Color(0xFFffa929)
+        4 -> bgColor = Color(0xFF1e90ff)
+    }
+
+    Card(
+        Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        contentColor = Color.White
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = CenterHorizontally,
+            modifier = Modifier.background(color = bgColor),
+        ) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Order #: ${data.orderId}")
+                Spacer(Modifier.width(8.dp))
+                Text(text = "User: ${data.username}")
+                Spacer(Modifier.width(8.dp))
+                Text(text = "Total: $${data.subTotal}")
+                Spacer(Modifier.width(8.dp))
+                Text(text = "Ticket #: $${data.ticketNumber}")
+            }
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = "Order Time: ${data.orderDateTime}",
+                modifier = Modifier.padding(horizontal = 12.dp)
+            )
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                when (data.orderType) {
+                    1 -> Text(text = "Dine In")
+                    2 -> Text(text = "To Go")
+                    3 -> Text(text = "Pick Up")
+                    4 -> Text(text = "Delivery")
+                }
+
+                Spacer(Modifier.width(8.dp))
+                Text(text = "-")
+                Spacer(Modifier.width(8.dp))
+                Text(text = data.username, fontWeight = FontWeight.SemiBold)
+            }
+        }
+    }
+}
 
 @Composable
 fun TopList(name: String, function: (String) -> Unit) {
-    Column(Modifier.fillMaxWidth()) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)) {
         Row(
             Modifier
                 .fillMaxWidth()

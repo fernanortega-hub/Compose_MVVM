@@ -8,5 +8,5 @@ data class RecallResponse(
     @SerializedName("subTotal") val subTotal: Double,
     @SerializedName("ticketNumber") val ticketNumber: Int,
     @SerializedName("orderDateTime") val orderDateTime: String,
-    @SerializedName("orderType") val orderType: String
+    @SerializedName("orderType") val orderType: Int
 )
