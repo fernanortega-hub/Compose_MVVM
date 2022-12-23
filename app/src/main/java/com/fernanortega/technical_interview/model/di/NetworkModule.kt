@@ -1,4 +1,4 @@
-package com.fernanortega.technical_interview.di
+package com.fernanortega.technical_interview.model.di
 
 import com.fernanortega.technical_interview.model.network.client.RecallClient
 import dagger.Module

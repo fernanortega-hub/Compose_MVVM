@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">Technical_Interview</string>
+    <string name="app_name" translatable="false">Technical Interview</string>
+    <string name="clear_label"> Clear </string>
+    <string name="go_label"> Go </string>
+    <string name="list_orders_label"> List of orders </string>
+    <string name="orderTime_label"> Order Time </string>
+    <string name="dine_in"> Dine In </string>
+    <string name="to_go"> To Go </string>
+    <string name="delivery"> Delivery </string>
+    <string name="pick_up"> Pick Up </string>
+    <string name="all"> All </string>
+    <string name="order_label"> Order  </string>
+    <string name="add_tip_label"> Add Tip </string>
+    <string name="order_number_label"> Type the order number </string>
+    <string name="user_label"> User </string>
+    <string name="total_label" translatable="false"> Total </string>
+    <string name="ticket_label" translatable="false"> Ticket </string>
+    <string name="connection_lost_message"> You do not have an internet connection, connect to update </string>
 </resources>

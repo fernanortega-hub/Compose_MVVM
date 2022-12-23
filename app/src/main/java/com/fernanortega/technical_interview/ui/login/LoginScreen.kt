@@ -15,17 +15,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fernanortega.technical_interview.R
 import com.fernanortega.technical_interview.ui.navigation.Routes
-import com.fernanortega.technical_interview.ui.theme.Technical_InterviewTheme
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -60,7 +58,7 @@ fun LoginScreen(navController: NavController) {
                     },
                     modifier = Modifier
                         .height(80.dp)
-                        .width(380.dp)
+                        .width(400.dp)
                         .background(MaterialTheme.colors.surface),
                     readOnly = true,
                     singleLine = true,
@@ -69,71 +67,77 @@ fun LoginScreen(navController: NavController) {
                 )
                 Row(
                     Modifier
-                        .width(380.dp)
-                        .padding(vertical = 16.dp), horizontalArrangement = Arrangement.SpaceBetween
+                        .width(400.dp)
+                        .padding(vertical = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    KeyboardButton(text = "1", functionClick = {
+                    KeyboardButton(text = "1", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
 
-                    KeyboardButton(text = "2", functionClick = {
+                    KeyboardButton(text = "2", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
 
-                    KeyboardButton(text = "3", functionClick = {
+                    KeyboardButton(text = "3", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
                 }
                 Row(
                     Modifier
-                        .width(380.dp)
-                        .padding(vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween
+                        .width(400.dp)
+                        .padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    KeyboardButton(text = "4", functionClick = {
+                    KeyboardButton(text = "4", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
 
-                    KeyboardButton(text = "5", functionClick = {
+                    KeyboardButton(text = "5", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
 
-                    KeyboardButton(text = "6", functionClick = {
+                    KeyboardButton(text = "6", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
                 }
                 Row(
                     Modifier
-                        .width(380.dp)
-                        .padding(vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween
+                        .width(400.dp)
+                        .padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    KeyboardButton(text = "7", functionClick = {
+                    KeyboardButton(text = "7", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
 
-                    KeyboardButton(text = "8", functionClick = {
+                    KeyboardButton(text = "8", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
 
-                    KeyboardButton(text = "9", functionClick = {
+                    KeyboardButton(text = "9", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
                 }
                 Row(
                     Modifier
-                        .width(380.dp)
-                        .padding(vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween
+                        .width(400.dp)
+                        .padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    KeyboardButton(text = "Clear", functionClick = {
-                        inputData = ""
-                    })
+                    KeyboardButton(
+                        text = stringResource(id = R.string.clear_label),
+                        modifier = Modifier.weight(1f),
+                        functionClick = {
+                            inputData = ""
+                        })
 
-                    KeyboardButton(text = "0", functionClick = {
+                    KeyboardButton(text = "0", modifier = Modifier.weight(1f), functionClick = {
                         inputData += it
                     })
 
-                    KeyboardButton(text = "Go", functionClick = {
-                        navController.navigate(Routes.Recall.toString())
-                    })
+                    KeyboardButton(
+                        text = stringResource(id = R.string.go_label),
+                        modifier = Modifier.weight(1f),
+                        functionClick = {
+                            navController.navigate(Routes.Recall.toString())
+                        })
                 }
                 Image(
                     painterResource(id = R.drawable.google),
@@ -141,8 +145,7 @@ fun LoginScreen(navController: NavController) {
                     modifier = Modifier.width(64.dp)
                 )
             }
-        }
-        else {
+        } else {
             Row(
                 Modifier
                     .fillMaxSize()
@@ -171,7 +174,7 @@ fun LoginScreen(navController: NavController) {
                         },
                         modifier = Modifier
                             .height(80.dp)
-                            .width(380.dp)
+                            .width(400.dp)
                             .background(MaterialTheme.colors.surface),
                         readOnly = true,
                         singleLine = true,
@@ -180,75 +183,81 @@ fun LoginScreen(navController: NavController) {
                     )
                     Row(
                         Modifier
-                            .width(380.dp)
+                            .width(400.dp)
                             .padding(vertical = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        KeyboardButton(text = "1", functionClick = {
+                        KeyboardButton(text = "1", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
 
-                        KeyboardButton(text = "2", functionClick = {
+                        KeyboardButton(text = "2", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
 
-                        KeyboardButton(text = "3", functionClick = {
+                        KeyboardButton(text = "3", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
                     }
                     Row(
                         Modifier
-                            .width(380.dp)
+                            .width(400.dp)
                             .padding(vertical = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        KeyboardButton(text = "4", functionClick = {
+                        KeyboardButton(text = "4", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
 
-                        KeyboardButton(text = "5", functionClick = {
+                        KeyboardButton(text = "5", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
 
-                        KeyboardButton(text = "6", functionClick = {
+                        KeyboardButton(text = "6", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
                     }
                     Row(
                         Modifier
-                            .width(380.dp)
+                            .width(400.dp)
                             .padding(vertical = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        KeyboardButton(text = "7", functionClick = {
+                        KeyboardButton(text = "7", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
 
-                        KeyboardButton(text = "8", functionClick = {
+                        KeyboardButton(text = "8", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
 
-                        KeyboardButton(text = "9", functionClick = {
+                        KeyboardButton(text = "9", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
                     }
                     Row(
                         Modifier
-                            .width(380.dp)
+                            .width(400.dp)
                             .padding(vertical = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        KeyboardButton(text = "Clear", functionClick = {
-                            inputData = ""
-                        })
+                        KeyboardButton(
+                            text = stringResource(id = R.string.clear_label),
+                            modifier = Modifier.weight(1f),
+                            functionClick = {
+                                inputData = ""
+                            })
 
-                        KeyboardButton(text = "0", functionClick = {
+                        KeyboardButton(text = "0", modifier = Modifier.weight(1f), functionClick = {
                             inputData += it
                         })
 
-                        KeyboardButton(text = "Go", functionClick = {
-                            navController.navigate(Routes.Recall.toString())
-                        })
+                        KeyboardButton(
+                            text = stringResource(id = R.string.go_label),
+                            modifier = Modifier.weight(1f),
+                            functionClick = {
+                                navController.navigate(Routes.Recall.toString())
+                            })
                     }
                     Spacer(modifier = Modifier.height(32.dp))
                     Image(
@@ -263,10 +272,11 @@ fun LoginScreen(navController: NavController) {
 }
 
 @Composable
-fun KeyboardButton(text: String, functionClick: (String) -> Unit) {
-    Button(modifier = Modifier
+fun KeyboardButton(text: String, functionClick: (String) -> Unit, modifier: Modifier) {
+    Button(modifier = modifier
         .height(100.dp)
-        .width(100.dp),
+//        .width(100.dp)
+        ,
         onClick = {
             functionClick(text)
         }) {

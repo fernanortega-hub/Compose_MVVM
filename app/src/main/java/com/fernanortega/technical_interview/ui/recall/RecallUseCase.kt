@@ -6,7 +6,11 @@ import com.fernanortega.technical_interview.repositories.RecallRepository
 import javax.inject.Inject
 
 class RecallUseCase @Inject constructor(private val repository: RecallRepository){
-    suspend operator fun invoke() : List<RecallResponse> {
+    suspend fun invokeNetwork() : List<RecallModel> {
         return repository.getAllFromNetwork()
+    }
+
+    suspend fun invokeLocal() : List<RecallModel> {
+        return repository.getAllFromLocal()
     }
 }

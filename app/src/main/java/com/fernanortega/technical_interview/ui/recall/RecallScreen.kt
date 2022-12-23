@@ -1,7 +1,10 @@
 package com.fernanortega.technical_interview.ui.recall
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.util.Log
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,23 +24,41 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.fernanortega.technical_interview.model.network.client.RecallResponse
+import com.fernanortega.technical_interview.R
+import com.fernanortega.technical_interview.model.domain.RecallModel
+import com.fernanortega.technical_interview.ui.helpers.CheckInternetConnection
 import java.text.SimpleDateFormat
 import java.util.*
 
+@RequiresApi(Build.VERSION_CODES.M)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RecallScreen(navController: NavController, recallViewModel: RecallViewModel) {
-    recallViewModel.getAllOrders()
-    val result: List<RecallResponse> by recallViewModel.list.observeAsState(initial = listOf())
-    val isUiLoading: Boolean by recallViewModel.isUiLoading.observeAsState(initial = false)
 
-    Scaffold(topBar = { TopAppBar() }, bottomBar = { BottomAppBar() }) {
+    val result: List<RecallModel> by recallViewModel.list.observeAsState(initial = listOf())
+    val isUiLoading: Boolean by recallViewModel.isUiLoading.observeAsState(initial = false)
+    val context = LocalContext.current
+
+    if (CheckInternetConnection(context)) {
+        recallViewModel.getAllOrders()
+    } else {
+        recallViewModel.getAllOrdersFromDatabase()
+        Toast.makeText(
+            context,
+            stringResource(id = R.string.connection_lost_message),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    Scaffold(topBar = { TopAppBar() }) {
         Column(
             Modifier
                 .fillMaxWidth()
@@ -97,7 +118,7 @@ fun BottomAppBar() {
     Column(Modifier.fillMaxWidth()) {
         Row(Modifier.fillMaxWidth()) {
             CategoryButton(
-                "All",
+                stringResource(id = R.string.all),
                 5, modifier = Modifier.weight(1f),
                 bgColor = MaterialTheme.colors.primary,
                 onClickFunction = {
@@ -105,7 +126,7 @@ fun BottomAppBar() {
                 }, icon = null
             )
             CategoryButton(
-                "To go",
+                stringResource(id = R.string.to_go),
                 1, modifier = Modifier.weight(2f),
                 bgColor = Color(0xFF8ec35d),
                 onClickFunction = {
@@ -113,7 +134,7 @@ fun BottomAppBar() {
                 }, icon = null
             )
             CategoryButton(
-                "Dine In",
+                stringResource(id = R.string.dine_in),
                 2, modifier = Modifier.weight(2f),
                 bgColor = Color(0xFFa9a9a9),
                 onClickFunction = {
@@ -121,7 +142,7 @@ fun BottomAppBar() {
                 }, icon = null
             )
             CategoryButton(
-                "Pick up",
+                stringResource(id = R.string.pick_up),
                 3, modifier = Modifier.weight(2f),
                 bgColor = Color(0xFFffa929),
                 onClickFunction = {
@@ -129,7 +150,7 @@ fun BottomAppBar() {
                 }, icon = null
             )
             CategoryButton(
-                "Delivery",
+                stringResource(id = R.string.delivery),
                 4, modifier = Modifier.weight(2f),
                 bgColor = Color(0xFF1e90ff),
                 onClickFunction = {
@@ -139,7 +160,7 @@ fun BottomAppBar() {
             )
             CategoryButton(
                 "",
-                5,
+                6,
                 modifier = Modifier.weight(1f),
                 bgColor = MaterialTheme.colors.primary,
                 onClickFunction = {
@@ -172,7 +193,7 @@ fun BottomAppBar() {
             ) {
                 Icon(
                     imageVector = Icons.Default.Done,
-                    contentDescription = "Close button",
+                    contentDescription = "Done button",
                     modifier = Modifier
                         .width(64.dp)
                         .height(64.dp)
@@ -213,29 +234,33 @@ fun AddTipButton() {
             contentDescription = "Add tip icon",
             modifier = Modifier.padding(end = 8.dp)
         )
-        Text(text = "Add Tip")
+        Text(text = stringResource(id = R.string.add_tip_label))
     }
 }
 
 @Composable
-fun ListOfOrders(listResult: List<RecallResponse>) {
+fun ListOfOrders(listResult: List<RecallModel>) {
     var order by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf(5) }
 
-    Column(Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         TopList(order) { order = it }
-        LazyColumn() {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.weight(1f)
+        ) {
             listResult.forEach {
                 item {
                     OrderCard(it)
                 }
             }
         }
+        BottomAppBar()
     }
 }
 
 @Composable
-fun OrderCard(data: RecallResponse) {
+fun OrderCard(data: RecallModel) {
 
     var bgColor: Color = MaterialTheme.colors.onSurface
     when (data.orderType) {
@@ -247,8 +272,7 @@ fun OrderCard(data: RecallResponse) {
 
     Card(
         Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),
+            .fillMaxWidth(),
         contentColor = Color.White
     ) {
         Column(
@@ -259,33 +283,33 @@ fun OrderCard(data: RecallResponse) {
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
+                    .padding(end = 12.dp, start = 12.dp, top = 12.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "Order #: ${data.orderId}")
+                Text(text = "${stringResource(id = R.string.order_label)}#: ${data.orderId}")
                 Spacer(Modifier.width(8.dp))
-                Text(text = "User: ${data.username}")
+                Text(text = "${stringResource(id = R.string.user_label)}: ${data.username}")
                 Spacer(Modifier.width(8.dp))
-                Text(text = "Total: $${data.subTotal}")
+                Text(text = "${stringResource(id = R.string.total_label)}: $${data.subTotal}")
                 Spacer(Modifier.width(8.dp))
-                Text(text = "Ticket #: $${data.ticketNumber}")
+                Text(text = "${stringResource(id = R.string.ticket_label)}#: ${data.ticketNumber}")
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Order Time: ${data.orderDateTime}",
+                text = "${stringResource(id = R.string.orderTime_label)}: ${data.orderDateTime}",
                 modifier = Modifier.padding(horizontal = 12.dp)
             )
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
+                    .padding(end = 12.dp, start = 12.dp, bottom = 12.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
                 when (data.orderType) {
-                    1 -> Text(text = "Dine In")
-                    2 -> Text(text = "To Go")
-                    3 -> Text(text = "Pick Up")
-                    4 -> Text(text = "Delivery")
+                    1 -> Text(text = stringResource(id = R.string.dine_in))
+                    2 -> Text(text = stringResource(id = R.string.to_go))
+                    3 -> Text(text = stringResource(id = R.string.pick_up))
+                    4 -> Text(text = stringResource(id = R.string.delivery))
                 }
 
                 Spacer(Modifier.width(8.dp))
@@ -302,17 +326,18 @@ fun TopList(name: String, function: (String) -> Unit) {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp)) {
+            .padding(bottom = 16.dp)
+    ) {
         Row(
             Modifier
                 .fillMaxWidth()
                 .background(color = Color.LightGray)
                 .padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "List of orders", fontSize = 16.sp)
+            Text(text = stringResource(id = R.string.list_orders_label), fontSize = 16.sp)
             Text(text = getTodayDate(), fontSize = 16.sp)
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = name,
             onValueChange = { function(it) },
@@ -323,14 +348,14 @@ fun TopList(name: String, function: (String) -> Unit) {
                         contentDescription = "Search Icon",
                         modifier = Modifier.padding(end = 8.dp)
                     )
-                    Text(text = "Type the order number")
+                    Text(text = stringResource(id = R.string.order_number_label))
                 }
             },
             maxLines = 1,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             label = {
-                Text(text = "Type the order number")
+                Text(text = stringResource(id = R.string.order_number_label))
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )

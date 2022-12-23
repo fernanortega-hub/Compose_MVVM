@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_orders_label"> Lista de ordenes </string>
+    <string name="clear_label"> Limpiar </string>
+    <string name="go_label"> Ir </string>
+    <string name="orderTime_label"> Tiempo de orden </string>
+    <string name="dine_in"> Para comer </string>
+    <string name="to_go"> Para llevar </string>
+    <string name="delivery"> Entregar </string>
+    <string name="pick_up"> Para recoger </string>
+    <string name="all"> Todas </string>
+    <string name="order_label"> Orden </string>
+    <string name="add_tip_label"> Agregar propina </string>
+    <string name="order_number_label"> Ingresa el número de orden </string>
+    <string name="user_label"> Usuario </string>
+    <string name="connection_lost_message"> No cuentas con conexión a internet, conectate para actualizar </string>
+</resources>

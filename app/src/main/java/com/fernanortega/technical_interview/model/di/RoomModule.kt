@@ -1,4 +1,4 @@
-package com.fernanortega.technical_interview.di
+package com.fernanortega.technical_interview.model.di
 
 import android.content.Context
 import androidx.room.Room
