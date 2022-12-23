@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
@@ -25,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,13 +42,12 @@ import java.util.*
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RecallScreen(navController: NavController, recallViewModel: RecallViewModel) {
-
-    val result: List<RecallModel> by recallViewModel.list.observeAsState(initial = listOf())
     val isUiLoading: Boolean by recallViewModel.isUiLoading.observeAsState(initial = false)
+    val result: List<RecallModel> by recallViewModel.list.observeAsState(initial = listOf())
     val context = LocalContext.current
 
     if (CheckInternetConnection(context)) {
-        recallViewModel.getAllOrders()
+        recallViewModel.getAllOrdersFromNetwork()
     } else {
         recallViewModel.getAllOrdersFromDatabase()
         Toast.makeText(
@@ -83,7 +82,7 @@ fun RecallScreen(navController: NavController, recallViewModel: RecallViewModel)
                     CircularProgressIndicator()
                 }
             } else {
-                if (result.isEmpty()) {
+                if(result.isEmpty()) {
                     Column(
                         Modifier
                             .fillMaxSize(),
@@ -96,7 +95,7 @@ fun RecallScreen(navController: NavController, recallViewModel: RecallViewModel)
                         )
                     }
                 } else {
-                    ListOfOrders(result)
+                    ListOfOrders(recallViewModel)
                 }
             }
         }
@@ -114,31 +113,31 @@ fun TopAppBar() {
 }
 
 @Composable
-fun BottomAppBar() {
+fun BottomAppBar(recallViewModel: RecallViewModel) {
     Column(Modifier.fillMaxWidth()) {
         Row(Modifier.fillMaxWidth()) {
             CategoryButton(
                 stringResource(id = R.string.all),
-                5, modifier = Modifier.weight(1f),
+                5, modifier = Modifier.weight(1.5f),
                 bgColor = MaterialTheme.colors.primary,
                 onClickFunction = {
-                    Log.i("probando clicks", it.toString())
+                    recallViewModel.getAllOrdersFromNetwork()
                 }, icon = null
             )
             CategoryButton(
                 stringResource(id = R.string.to_go),
-                1, modifier = Modifier.weight(2f),
+                2, modifier = Modifier.weight(2f),
                 bgColor = Color(0xFF8ec35d),
                 onClickFunction = {
-                    Log.i("probando clicks", it.toString())
+                    recallViewModel.getForId(it)
                 }, icon = null
             )
             CategoryButton(
                 stringResource(id = R.string.dine_in),
-                2, modifier = Modifier.weight(2f),
+                1, modifier = Modifier.weight(2f),
                 bgColor = Color(0xFFa9a9a9),
                 onClickFunction = {
-                    Log.i("probando clicks", it.toString())
+                    recallViewModel.getForId(it)
                 }, icon = null
             )
             CategoryButton(
@@ -146,7 +145,7 @@ fun BottomAppBar() {
                 3, modifier = Modifier.weight(2f),
                 bgColor = Color(0xFFffa929),
                 onClickFunction = {
-                    Log.i("probando clicks", it.toString())
+                    recallViewModel.getForId(it)
                 }, icon = null
             )
             CategoryButton(
@@ -154,14 +153,14 @@ fun BottomAppBar() {
                 4, modifier = Modifier.weight(2f),
                 bgColor = Color(0xFF1e90ff),
                 onClickFunction = {
-                    Log.i("probando clicks", it.toString())
+                    recallViewModel.getForId(it)
                 },
                 icon = null
             )
             CategoryButton(
                 "",
                 6,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.5f),
                 bgColor = MaterialTheme.colors.primary,
                 onClickFunction = {
                     Log.i("probando clicks", it.toString())
@@ -222,7 +221,7 @@ fun CategoryButton(
         if (icon != null) {
             Icon(imageVector = icon, contentDescription = "icon")
         }
-        Text(text = name, fontSize = 22.sp)
+        Text(text = name, fontSize = 16.sp)
     }
 }
 
@@ -239,25 +238,25 @@ fun AddTipButton() {
 }
 
 @Composable
-fun ListOfOrders(listResult: List<RecallModel>) {
+fun ListOfOrders(recallViewModel: RecallViewModel) {
+    val result: List<RecallModel> by recallViewModel.list.observeAsState(initial = listOf())
     var order by rememberSaveable { mutableStateOf("") }
-    var filter by rememberSaveable { mutableStateOf(5) }
-
     Column(modifier = Modifier.fillMaxWidth()) {
         TopList(order) { order = it }
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.weight(1f)
         ) {
-            listResult.forEach {
+            result.forEach {
                 item {
                     OrderCard(it)
                 }
             }
         }
-        BottomAppBar()
+        BottomAppBar(recallViewModel)
     }
 }
+
 
 @Composable
 fun OrderCard(data: RecallModel) {
@@ -272,7 +271,10 @@ fun OrderCard(data: RecallModel) {
 
     Card(
         Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                Log.i("Probando click de card", data.orderId.toString())
+            },
         contentColor = Color.White
     ) {
         Column(

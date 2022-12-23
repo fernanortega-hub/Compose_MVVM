@@ -11,6 +11,9 @@ interface RecallDao {
     @Query("SELECT * FROM order_table")
     suspend fun getAll(): List<RecallEntity>
 
+    @Query("SELECT * FROM order_table WHERE orderType LIKE :type")
+    suspend fun getFromId(type: Int): List<RecallEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(order: RecallEntity)
 }

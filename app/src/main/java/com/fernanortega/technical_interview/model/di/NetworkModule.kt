@@ -1,5 +1,6 @@
 package com.fernanortega.technical_interview.model.di
 
+import com.fernanortega.technical_interview.model.network.client.EditClient
 import com.fernanortega.technical_interview.model.network.client.RecallClient
 import dagger.Module
 import dagger.Provides
@@ -29,7 +30,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRecallClient(): RecallClient {
-        return provideRetrofit().create(RecallClient::class.java)
+    fun provideRecallClient(retrofit: Retrofit): RecallClient {
+        return retrofit.create(RecallClient::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideEditClient(retrofit: Retrofit): EditClient {
+        return retrofit.create(EditClient::class.java)
     }
 }

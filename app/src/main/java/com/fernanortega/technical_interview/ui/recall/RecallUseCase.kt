@@ -13,4 +13,8 @@ class RecallUseCase @Inject constructor(private val repository: RecallRepository
     suspend fun invokeLocal() : List<RecallModel> {
         return repository.getAllFromLocal()
     }
+
+    suspend fun invokeLocalForId(type: Int) : List<RecallModel> {
+        return repository.getForType(type)
+    }
 }

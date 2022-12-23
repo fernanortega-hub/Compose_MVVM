@@ -1,10 +1,10 @@
 package com.fernanortega.technical_interview.ui.recall
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fernanortega.technical_interview.model.domain.RecallModel
-import com.fernanortega.technical_interview.model.network.client.RecallResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,15 +14,16 @@ class RecallViewModel @Inject constructor(private val recallUseCase: RecallUseCa
     ViewModel() {
 
     val list = MutableLiveData<List<RecallModel>>()
-    val isUiLoading = MutableLiveData<Boolean>(false)
+    val isUiLoading = MutableLiveData(false)
 
-    fun getAllOrders() {
+    fun getAllOrdersFromNetwork() {
         viewModelScope.launch {
             isUiLoading.value = true
 
             val result = recallUseCase.invokeNetwork()
             list.value = result
             isUiLoading.value = false
+
         }
     }
 
@@ -30,6 +31,15 @@ class RecallViewModel @Inject constructor(private val recallUseCase: RecallUseCa
         viewModelScope.launch {
             isUiLoading.value = true
             val result = recallUseCase.invokeLocal()
+            list.value = result
+            isUiLoading.value = false
+        }
+    }
+
+    fun getForId(type: Int) {
+        viewModelScope.launch {
+            isUiLoading.value = true
+            val result = recallUseCase.invokeLocalForId(type)
             list.value = result
             isUiLoading.value = false
         }
