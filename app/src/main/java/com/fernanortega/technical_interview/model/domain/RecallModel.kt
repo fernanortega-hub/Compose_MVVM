@@ -19,4 +19,3 @@ data class RecallModel(
 
 fun RecallEntity.toDomain() = RecallModel(orderId, username, subTotal, ticketNumber, orderDateTime, orderType)
 fun RecallResponse.toDomain() = RecallModel(orderId, username, subTotal, ticketNumber, orderDateTime, orderType)
-//fun EditRequest.toDomain() = RecallModel(orderId, username, subTotal, ticketNumber, orderDateTime, orderType)

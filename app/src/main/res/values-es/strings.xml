@@ -7,11 +7,21 @@
     <string name="dine_in"> Para comer </string>
     <string name="to_go"> Para llevar </string>
     <string name="delivery"> Entregar </string>
+    <string name="cancel_label"> Cancelar </string>
+    <string name="edit_confirmation_label"> Editar orden </string>
     <string name="pick_up"> Para recoger </string>
+    <string name="order_type_label"> Tipo de orden </string>
+    <string name="edit_order_instructions"> Solamente puedes editar usuario y total de la orden </string>
     <string name="all"> Todas </string>
     <string name="order_label"> Orden </string>
     <string name="add_tip_label"> Agregar propina </string>
+    <string name="check_your_connection_title"> Revisa tu conexión </string>
+    <string name="check_your_connection_body"> No puedes realizar la acción deseada, debes contar con una conexión a internet </string>
+    <string name="check_your_connection_button"> Ver conexiones disponibles </string>
+    <string name="check_user_total_info"> Usuario y subtotal no deben ser datos vacíos </string>
     <string name="order_number_label"> Ingresa el número de orden </string>
     <string name="user_label"> Usuario </string>
+    <string name="check_total_format"> Ingresa un número válido en total </string>
     <string name="connection_lost_message"> No cuentas con conexión a internet, conectate para actualizar </string>
+    <string name="edit_order_label"> Editar orden </string>
 </resources>

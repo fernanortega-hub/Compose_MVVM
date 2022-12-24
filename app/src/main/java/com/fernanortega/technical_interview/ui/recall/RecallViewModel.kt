@@ -1,6 +1,5 @@
 package com.fernanortega.technical_interview.ui.recall
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

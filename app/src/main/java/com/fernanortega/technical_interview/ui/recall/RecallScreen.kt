@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,6 +37,7 @@ import androidx.navigation.NavController
 import com.fernanortega.technical_interview.R
 import com.fernanortega.technical_interview.model.domain.RecallModel
 import com.fernanortega.technical_interview.ui.helpers.CheckInternetConnection
+import com.fernanortega.technical_interview.ui.navigation.Routes
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -95,7 +98,7 @@ fun RecallScreen(navController: NavController, recallViewModel: RecallViewModel)
                         )
                     }
                 } else {
-                    ListOfOrders(recallViewModel)
+                    ListOfOrders(recallViewModel, navController)
                 }
             }
         }
@@ -238,7 +241,7 @@ fun AddTipButton() {
 }
 
 @Composable
-fun ListOfOrders(recallViewModel: RecallViewModel) {
+fun ListOfOrders(recallViewModel: RecallViewModel, navController: NavController) {
     val result: List<RecallModel> by recallViewModel.list.observeAsState(initial = listOf())
     var order by rememberSaveable { mutableStateOf("") }
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -249,7 +252,7 @@ fun ListOfOrders(recallViewModel: RecallViewModel) {
         ) {
             result.forEach {
                 item {
-                    OrderCard(it)
+                    OrderCard(it, navController)
                 }
             }
         }
@@ -259,7 +262,7 @@ fun ListOfOrders(recallViewModel: RecallViewModel) {
 
 
 @Composable
-fun OrderCard(data: RecallModel) {
+fun OrderCard(data: RecallModel, navController: NavController) {
 
     var bgColor: Color = MaterialTheme.colors.onSurface
     when (data.orderType) {
@@ -271,9 +274,10 @@ fun OrderCard(data: RecallModel) {
 
     Card(
         Modifier
-            .fillMaxWidth()
-            .clickable {
-                Log.i("Probando click de card", data.orderId.toString())
+            .fillMaxWidth().pointerInput(Unit) {
+                detectTapGestures(onDoubleTap = {
+                    navController.navigate(Routes.EditOrder.createRoute(data.orderId))
+                })
             },
         contentColor = Color.White
     ) {

@@ -23,4 +23,8 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideRecallDao(database: TechnicalInterviewDatabase) = database.getRecallDao()
+
+    @Singleton
+    @Provides
+    fun provideEditOrderDao(database: TechnicalInterviewDatabase) = database.getEditOrderDao()
 }

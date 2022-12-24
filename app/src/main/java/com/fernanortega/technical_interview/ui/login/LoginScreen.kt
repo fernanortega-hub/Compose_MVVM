@@ -136,7 +136,7 @@ fun LoginScreen(navController: NavController) {
                         text = stringResource(id = R.string.go_label),
                         modifier = Modifier.weight(1f),
                         functionClick = {
-                            navController.navigate(Routes.Recall.toString())
+                            navController.navigate(Routes.Recall.route)
                         })
                 }
                 Image(
@@ -256,7 +256,7 @@ fun LoginScreen(navController: NavController) {
                             text = stringResource(id = R.string.go_label),
                             modifier = Modifier.weight(1f),
                             functionClick = {
-                                navController.navigate(Routes.Recall.toString())
+                                navController.navigate(Routes.Recall.route)
                             })
                     }
                     Spacer(modifier = Modifier.height(32.dp))

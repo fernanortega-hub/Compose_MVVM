@@ -10,10 +10,20 @@
     <string name="pick_up"> Pick Up </string>
     <string name="all"> All </string>
     <string name="order_label"> Order  </string>
+    <string name="order_type_label"> Order type </string>
+    <string name="edit_order_instructions"> You can only edit username and order total </string>
     <string name="add_tip_label"> Add Tip </string>
+    <string name="cancel_label"> Cancel </string>
+    <string name="edit_confirmation_label"> Edit order </string>
+    <string name="check_user_total_info"> Username and subtotal must not be empty data </string>
     <string name="order_number_label"> Type the order number </string>
     <string name="user_label"> User </string>
     <string name="total_label" translatable="false"> Total </string>
     <string name="ticket_label" translatable="false"> Ticket </string>
     <string name="connection_lost_message"> You do not have an internet connection, connect to update </string>
+    <string name="check_total_format"> Enter a valid number in total </string>
+    <string name="edit_order_label"> Edit order </string>
+    <string name="check_your_connection_title"> Check your connection </string>
+    <string name="check_your_connection_body"> You cannot perform the desired action, you must have an internet connection </string>
+    <string name="check_your_connection_button"> See available connections </string>
 </resources>
