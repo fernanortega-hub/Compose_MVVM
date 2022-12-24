@@ -9,5 +9,5 @@ interface EditClient {
 
     @PUT("updateOrder")
     @Headers("API-KEY: TECHNICALTESTabposus.com")
-    suspend fun editOrder(@Body body: EditRequest): RecallResponse
+    suspend fun editOrder(@Body body: EditRequest)
 }

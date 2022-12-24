@@ -14,7 +14,7 @@ class EditRepository @Inject constructor(
     private val api: EditClient,
     private val editOrderDao: EditOrderDao
 ) {
-    suspend fun editOrder(body: RecallModel) : RecallModel {
+    suspend fun editOrder(body: RecallModel) {
         return withContext(Dispatchers.IO) {
             val request = api.editOrder(
                 EditRequest(
@@ -26,8 +26,6 @@ class EditRepository @Inject constructor(
                     body.orderType
                 )
             )
-            val finalResponse = request.toDomain()
-            finalResponse
         }
     }
 

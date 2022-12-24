@@ -11,23 +11,18 @@ import javax.inject.Inject
 @HiltViewModel
 class EditViewModel @Inject constructor(private val editUseCase: EditUseCase) : ViewModel() {
 
-    val isUiLoading = MutableLiveData(false)
     val data = MutableLiveData<RecallModel>()
 
     fun getOrderData(id: Int) {
         viewModelScope.launch {
-            isUiLoading.value = true
             val result = editUseCase.invokeGetDataFromDatabase(id)
             data.value = result
-            isUiLoading.value = false
         }
     }
 
     fun updateOrder(data: RecallModel) {
         viewModelScope.launch {
-            isUiLoading.value = true
             val request = editUseCase.invokeUpdateOrder(data)
-            isUiLoading.value = false
         }
     }
 }
