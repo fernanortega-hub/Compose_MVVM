@@ -153,10 +153,12 @@ fun EditScreen(navController: NavController, viewModel: EditViewModel) {
                                         result.orderType
                                     )
                                 )
-                            } catch (error: Exception) {
+                            } catch (error: java.lang.NumberFormatException) {
                                 Toast.makeText(context, R.string.check_total_format, Toast.LENGTH_LONG)
                                     .show()
+                                return@Button
                             }
+
                             navController.navigate(Routes.Recall.route)
                         } else {
                             Toast.makeText(
