@@ -15,6 +15,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,6 +50,12 @@ fun EditScreen(navController: NavController, viewModel: EditViewModel) {
         2 -> orderType = stringResource(id = R.string.to_go)
         3 -> orderType = stringResource(id = R.string.pick_up)
         4 -> orderType = stringResource(id = R.string.delivery)
+    }
+
+    val focusRequester = FocusRequester()
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
     }
 
     Scaffold(Modifier.fillMaxSize(), topBar = {
@@ -105,7 +113,9 @@ fun EditScreen(navController: NavController, viewModel: EditViewModel) {
                     )
                 })
             OutlinedTextField(
-                modifier = Modifier.width(480.dp),
+                modifier = Modifier
+                    .width(480.dp)
+                    .focusRequester(focusRequester),
                 value = username,
                 onValueChange = {
                     username = it
@@ -114,7 +124,8 @@ fun EditScreen(navController: NavController, viewModel: EditViewModel) {
                     Text(
                         text = stringResource(id = R.string.user_label)
                     )
-                })
+                }, singleLine = true, maxLines = 1
+            )
             OutlinedTextField(
                 modifier = Modifier.width(480.dp),
                 value = subTotal,
@@ -126,7 +137,8 @@ fun EditScreen(navController: NavController, viewModel: EditViewModel) {
                         text = stringResource(id = R.string.total_label)
                     )
                 },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                singleLine = true, maxLines = 1
             )
 
             Row(Modifier.width(480.dp), horizontalArrangement = spacedBy(12.dp)) {
@@ -154,7 +166,11 @@ fun EditScreen(navController: NavController, viewModel: EditViewModel) {
                                     )
                                 )
                             } catch (error: java.lang.NumberFormatException) {
-                                Toast.makeText(context, R.string.check_total_format, Toast.LENGTH_LONG)
+                                Toast.makeText(
+                                    context,
+                                    R.string.check_total_format,
+                                    Toast.LENGTH_LONG
+                                )
                                     .show()
                                 return@Button
                             }
