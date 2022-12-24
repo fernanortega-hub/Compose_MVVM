@@ -22,7 +22,7 @@ class EditViewModel @Inject constructor(private val editUseCase: EditUseCase) : 
 
     fun updateOrder(data: RecallModel) {
         viewModelScope.launch {
-            val request = editUseCase.invokeUpdateOrder(data)
+            editUseCase.invokeUpdateOrder(data)
         }
     }
 }
